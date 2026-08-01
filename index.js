@@ -49,6 +49,23 @@ app.get('/tasks/:id', (req, res) => {
   }
 });
 
+app.post('/tasks', (req, res) => {
+  const { title } = req.body;
+
+  if (!title) {
+    return res.status(400).json({ error: 'Invalid task data' });
+  }
+
+  const newTask = {
+    id: taskList.length + 1,
+    title,
+    done: false,
+  };
+
+  taskList.push(newTask);
+  res.status(201).json(newTask);
+});
+
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
